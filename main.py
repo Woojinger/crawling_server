@@ -27,7 +27,7 @@ def AmazonCrawling(now, number) :
         Amazon(Name=item["Name"], Brand = item["Brand"], Rank =item["Rank"], Selected_category = item["Selected_category"], Parent_category = item["Parent_category"], Date = item["Date"]).save()
     if len(children_address_list) != 0:
         for address in children_address_list:
-            now = AmazonCrawl(address, now.get_parent_category()+"/"+category)
+            now = AmazonCrawl(address, category)
             AmazonCrawling(now, number+1)
         return True
     else :
@@ -47,14 +47,6 @@ if __name__ =='__main__':
         "https://www.amazon.com/Best-Sellers-Home-Kitchen-Bedroom-Furniture/zgbs/home-garden/1063308/ref=zg_bs_unv_hg_3_3733271_1",
         "Furniture")
     now = start
+    AmazonCrawling(now, 1)
+    GevolutionCrawling()
     #Gevolution Crawl
-
-    #Timer
-    x = datetime.today()
-    y = x.replace(day=x.day, hour=1, minute=0, second=0, microsecond=0) + timedelta(days=1)
-    delta_t = y - x
-
-    secs = delta_t.total_seconds()
-    t1 = Timer(secs, AmazonCrawling(now, 1))
-    t1.start()
-    t2 = Timer(secs, GevolutionCrawling())
