@@ -25,7 +25,7 @@ SECRET_KEY = '3&gi&+krw07@g^j045(ru7apd1io_)=$n8tt9sg&%*y#tosfw8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["http://crawlvalue.pythonanywhere.com/"]
+ALLOWED_HOSTS = ["crawlvalue.pythonanywhere.com/"]
 
 
 # Application definition
