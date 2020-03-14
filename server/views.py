@@ -1,7 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Gevolution, Amazon
+from .serializers import AmazonSerializer, GevolutionSerializer
 from django.views.generic import ListView
+from rest_framework import viewsets
 
 
 def index(request):
@@ -9,6 +11,18 @@ def index(request):
         request,
         "server/index.html"
     )
+
+class AmazonView(viewsets.ModelViewSet):
+	serializer_class = AmazonSerializer
+	def get_queryset(self):
+		queryset = Amazon.objects.all()
+		return queryset
+
+class GevolutionView(viewsets.ModelViewSet):
+	serializer_class = GevolutionSerializer
+	def get_queryset(self):
+		queryset = Gevolution.objects.all()
+		return queryset
 
 class AmazonList(ListView):
     model = Amazon

@@ -18,7 +18,7 @@ from server.models import Amazon, Gevolution
 
 def AmazonCrawling(now, number) :
     if(number >3):
-        return False;
+        return False
     now.crawl()
     category = now.get_selected_category()
     children_address_list = now.get_children_category_address()
