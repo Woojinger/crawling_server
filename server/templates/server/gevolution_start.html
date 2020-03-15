@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gevolution_select</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="{% static 'server/amazon/bootstrap.min.css' %}">
+</head>
+<style>
+.dropdown-content {
+  display: none;
+  background-color: #f9f9f9;
+  margin : auto;
+  max-width: 130px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+.show {display:block;}
+
+</style>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/gevolution/Aos/select">App Rank</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor02">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/gevolution/Aos/select">Aos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/gevolution/Ios/select">Ios</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/">Main</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action = "../graph" method="get">
+      <input class="form-control mr-sm-2" type="text" name="name" placeholder="Search">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+<div class="card border-dark mb-3" style="max-width: 20rem; margin:auto;">
+    <div class="card-header" style="text-align: center;">Selected App Market</div>
+    <div class="card-body">
+        <h4 class="card-title" style="text-align: center;">{{ Appmarket }}</h4>
+    </div>
+</div>
+
+<h4 align="center"><small class="text-muted">날짜별 순위 보기는 <strong>2020년 3월 14일부터 현재 날짜</strong>까지만 볼 수 있습니다(현재 날짜는 시간에 따라 업데이트가 안되어 있을 수 있음)</small></h4>
+<h4 align="center"><small class="text-muted">앱별 순위 변화는 <strong>오른쪽 상단 위의 검색창</strong>에 검색하시면 됩니다</small></h4>
+<h4 align="center"><small class="text-muted"><strong>앱의 이름은 정확히 치셔야 합니다  </strong>ex) A3: 스틸얼라이브 (A3로 치면 나오지 않음)</small></h4>
+<div style="text-align: center;">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-primary active">
+            <input id = "datebtn" type="checkbox" checked="" autocomplete="off"> 날짜별 순위 보기
+        </label>
+    </div>
+</div>
+<div style="text-align: center;">
+    <div id="myDropdown" class="dropdown-content" style="text-align: center;">
+        <form action = "./" method="get">
+            <fieldset class="form-group">
+                <legend><h5><small class="text-muted">날짜를 고르세요</small></h5></legend>
+                <span class="validity"></span>
+                <input type="date" name="date" id="dateselect" min="2020-03-14" required pattern="\d{4}-\d{2}-\d{2}" style="margin: auto;">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById("datebtn").onclick = function() {myFunction1()};
+    function myFunction1() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+    document.getElementById('dateselect').value = new Date().toISOString().substring(0, 10);
+    document.getElementById('dateselect').max = new Date().toISOString().substring(0, 10);
+</script>
+<script src="{% static 'server/amazon/js/jquery.min.js' %}"></script>
+<script src="{% static 'server/amazon/js/popper.min.js' %}"></script>
+<script src="{% static 'server/amazon/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'server/amazon/js/custom.js' %}"></script>
+</body>
+</html>

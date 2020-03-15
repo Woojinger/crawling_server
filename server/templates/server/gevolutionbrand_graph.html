@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gevolution_graph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="{% static 'server/amazon/bootstrap.min.css' %}">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+    var arr1 = {{ AosFree|safe }}
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(arr1);
+
+        var options = {
+          title: 'Aos 무료 앱 순위',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          vAxis: {
+        viewWindow: {
+          min: 0,
+          max: 100
+        }
+      }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('AosFree'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+    var arr2 = {{ AosCharge|safe }}
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(arr2);
+
+        var options = {
+          title: 'Aos 유료 앱 순위',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          vAxis: {
+        viewWindow: {
+          min: 0,
+          max: 100
+        }
+      }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('AosCharge'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+    var arr3 = {{ AosSales|safe }}
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(arr3);
+
+        var options = {
+          title: 'Aos 앱 매출 순위',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          vAxis: {
+        viewWindow: {
+          min: 0,
+          max: 100
+        }
+      }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('AosSales'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+    var arr4 = {{ IosFree|safe }}
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(arr4);
+
+        var options = {
+          title: 'Ios 무료 앱 순위',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          vAxis: {
+        viewWindow: {
+          min: 0,
+          max: 100
+        }
+      }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('IosFree'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+    var arr5 = {{ IosCharge|safe }}
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(arr5);
+
+        var options = {
+          title: 'Ios 유료 앱 순위',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          vAxis: {
+        viewWindow: {
+          min: 0,
+          max: 100
+        }
+      }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('IosCharge'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+    var arr6 = {{ IosSales|safe }}
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(arr6);
+
+        var options = {
+          title: 'Ios 앱 매출 순위',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          vAxis: {
+        viewWindow: {
+          min: 0,
+          max: 100
+        }
+      }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('IosSales'));
+
+        chart.draw(data, options);
+      }
+    </script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/gevolution/Aos/select">App Rank</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor02">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/gevolution/Aos/select">Aos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/gevolution/Ios/select">Ios</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/">Main</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action = "../graph" method="get">
+      <input class="form-control mr-sm-2" type="text" name="name" placeholder="Search">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+<h4 align="center"><small class="text-muted">앱별 순위 변화는 <strong>오른쪽 상단 위의 검색창</strong>에 검색하시면 됩니다</small></h4>
+<h4 align="center"><small class="text-muted"><strong>앱의 이름은 정확히 치셔야 합니다  </strong>ex) A3: 스틸얼라이브 (A3로 치면 나오지 않음)</small></h4>
+{% if AF %}
+<div id="AosFree" style="width: 1000px; height: 400px"></div>
+{% endif %}
+{% if AC %}
+<div id="AosCharge" style="width: 1000px; height: 400px"></div>
+{% endif %}
+{% if AS %}
+<div id="AosSales" style="width: 1000px; height: 400px"></div>
+{% endif %}
+{% if IF %}
+<div id="IosFree" style="width: 1000px; height: 400px"></div>
+{% endif %}
+{% if IC %}
+<div id="IosCharge" style="width: 1000px; height: 400px"></div>
+{% endif %}
+{% if IS %}
+<div id="IosSales" style="width: 1000px; height: 400px"></div>
+{% endif %}
+
+<script src="{% static 'server/amazon/js/jquery.min.js' %}"></script>
+<script src="{% static 'server/amazon/js/popper.min.js' %}"></script>
+<script src="{% static 'server/amazon/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'server/amazon/js/custom.js' %}"></script>
+</body>
+</html>

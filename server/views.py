@@ -4,6 +4,7 @@ from .models import Gevolution, Amazon
 from .serializers import AmazonSerializer, GevolutionSerializer
 from django.views.generic import ListView
 from rest_framework import viewsets
+from django.db.models import Q
 from datetime import date
 
 
@@ -29,6 +30,111 @@ def AmazonSelect(request, q):
         "server/amazon_select.html",
         context
     )
+
+class AmazonbrandList(ListView):
+    model = Amazon
+    template_name = 'server/amazonbrand_list.html'
+    def get_queryset(self):
+        q = self.kwargs['q']
+        brand = self.kwargs['brand']
+        if(brand=="Linenspa") :
+            preobject_list = Amazon.objects.filter(Selected_category=q)
+            object_list = preobject_list.filter(Q(Brand="Linenspa") | Q(Brand="LINENSPA"))
+        else :
+            object_list = Amazon.objects.filter(Selected_category=q, Brand=brand)
+        return object_list
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(AmazonbrandList, self).get_context_data()
+        q = self.kwargs['q']
+        context['Category'] = "{}".format(q)
+        brand = self.kwargs['brand']
+        context['Brand'] = brand
+        if (brand == "Linenspa"):
+            preobject_list = Amazon.objects.filter(Selected_category=q)
+            object_list = preobject_list.filter(Q(Brand="Linenspa") | Q(Brand="LINENSPA"))
+        else:
+            object_list = Amazon.objects.filter(Selected_category=q, Brand=brand)
+        dictionary50 = {}
+        dictionary20 = {}
+        dictionary5 = {}
+        for item in object_list:
+            itemdate = item.Date
+            if itemdate in dictionary50:
+                dictionary50[itemdate] = dictionary50[itemdate] + 1
+            else :
+                dictionary50[itemdate] = 0
+            if (itemdate in dictionary20) and item.Rank<"21":
+                dictionary20[itemdate] = dictionary20[itemdate] + 1
+            else :
+                dictionary20[itemdate] = 0
+            if (itemdate in dictionary5) and item.Rank<"6":
+                dictionary5[itemdate] = dictionary5[itemdate] + 1
+            else :
+                dictionary5[itemdate] = 0
+        brandarray50 = [["Date", brand]]
+        brandarray20 = [["Date", brand]]
+        brandarray5 = [["Date", brand]]
+        for key in dictionary50.keys():
+            column50 = [key, dictionary50[key]]
+            column20 = [key, dictionary20[key]]
+            column5 = [key, dictionary5[key]]
+            brandarray50.append(column50)
+            brandarray20.append(column20)
+            brandarray5.append(column5)
+        context['arr50'] = brandarray50
+        context['arr20'] = brandarray20
+        context['arr5'] = brandarray5
+        return context
+
+
+class AmazonOtherBrand(ListView):
+    model = Amazon
+    template_name = 'server/amazonbrand_list.html'
+    def get_queryset(self):
+        q = self.kwargs['q']
+        brand = self.request.GET.get("brand")
+        object_list = Amazon.objects.filter(Selected_category=q, Brand=brand)
+        return object_list
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(AmazonOtherBrand, self).get_context_data()
+        q = self.kwargs['q']
+        context['Category'] = "{}".format(q)
+        brand = self.request.GET.get("brand")
+        context['Brand'] = brand
+        object_list = Amazon.objects.filter(Selected_category=q, Brand=brand)
+        dictionary50 = {}
+        dictionary20 = {}
+        dictionary5 = {}
+        for item in object_list:
+            itemdate = item.Date
+            if itemdate in dictionary50:
+                dictionary50[itemdate] = dictionary50[itemdate] + 1
+            else:
+                dictionary50[itemdate] = 0
+            if (itemdate in dictionary20) and item.Rank < "21":
+                dictionary20[itemdate] = dictionary20[itemdate] + 1
+            else:
+                dictionary20[itemdate] = 0
+            if (itemdate in dictionary5) and item.Rank < "6":
+                dictionary5[itemdate] = dictionary5[itemdate] + 1
+            else:
+                dictionary5[itemdate] = 0
+        brandarray50 = [["Date", brand]]
+        brandarray20 = [["Date", brand]]
+        brandarray5 = [["Date", brand]]
+        for key in dictionary50.keys():
+            column50 = [key, dictionary50[key]]
+            column20 = [key, dictionary20[key]]
+            column5 = [key, dictionary5[key]]
+            brandarray50.append(column50)
+            brandarray20.append(column20)
+            brandarray5.append(column5)
+        context['arr50'] = brandarray50
+        context['arr20'] = brandarray20
+        context['arr5'] = brandarray5
+
+        return context
 
 class AmazonView(viewsets.ModelViewSet):
     serializer_class = AmazonSerializer
@@ -73,4 +179,127 @@ class AmazonList(ListView):
         context['Category'] = "{}".format(q)
 
         context['Date'] = realdate
+        return context
+
+def GevolutionStart(request, q):
+    context = {"Appmarket": q}
+    return render(
+        request,
+        "server/gevolution_start.html",
+        context
+    )
+class GevolutionList(ListView):
+    model = Gevolution
+    template_name = 'server/gevolution_select.html'
+    def get_queryset(self):
+        q = self.kwargs['q']
+        date = self.request.GET.get("date")
+        datelist = date.split("-")
+        y = datelist[0]
+        realdate = y[2:] + "/" + datelist[1] + "/" + datelist[2]
+        preobject_list = Gevolution.objects.filter(Date=realdate)
+        if(q=="Aos") :
+            object_list = preobject_list.filter(Q(Category="AosKorFree") | Q(Category="AosKorCharge") | Q(Category="AosKorSales"))
+        elif (q == "Ios"):
+            object_list = preobject_list.filter(
+                Q(Category="IosKorFree") | Q(Category="IosKorCharge") | Q(Category="IosKorSales"))
+        else :
+            object_list = []
+        return object_list
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(GevolutionList, self).get_context_data()
+        q = self.kwargs['q']
+        date = self.request.GET.get("date")
+        datelist = date.split("-")
+        y = datelist[0]
+        realdate = y[2:] + "/" + datelist[1] + "/" + datelist[2]
+        context['Appmarket'] = "{}".format(q)
+        context['Date'] = realdate
+        return context
+
+class GevolutionGraph(ListView):
+    model = Gevolution
+    template_name = 'server/gevolutionbrand_graph.html'
+    def get_queryset(self):
+        name = self.request.GET.get("name")
+        object_list = Gevolution.objects.filter(Name=name)
+        return object_list
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(GevolutionGraph, self).get_context_data()
+        name = self.request.GET.get("name")
+        context['Name'] = name
+        object_list = Gevolution.objects.filter(Name=name)
+        AosFree_list = object_list.filter(Category="AosKorFree")
+        AosCharge_list = object_list.filter(Category="AosKorCharge")
+        AosSales_list = object_list.filter(Category="AosKorSales")
+        IosFree_list = object_list.filter(Category="IosKorFree")
+        IosCharge_list = object_list.filter(Category="IosKorCharge")
+        IosSales_list = object_list.filter(Category="IosKorSales")
+        dicAosFree = {}
+        dicAosCh = {}
+        dicAosSales = {}
+        dicIosFree = {}
+        dicIosCh = {}
+        dicIosSales = {}
+        if(len(AosFree_list)!=0) :
+            context["AF"] = True
+        if (len(AosCharge_list) != 0):
+            context["AC"] = True
+        if (len(AosSales_list) != 0):
+            context["AS"] = True
+        if (len(IosFree_list) != 0):
+            context["IF"] = True
+        if (len(IosCharge_list) != 0):
+            context["IC"] = True
+        if (len(IosSales_list) != 0):
+            context["IS"] = True
+
+        for item in AosFree_list:
+            itemdate = item.Date
+            dicAosFree[itemdate] = item.Rank
+        for item in AosCharge_list:
+            dicAosCh[itemdate] = item.Rank
+        for item in AosSales_list:
+            dicAosSales[itemdate] = item.Rank
+        for item in IosFree_list:
+            itemdate = item.Date
+            dicIosFree[itemdate] = item.Rank
+        for item in IosCharge_list:
+            dicIosCh[itemdate] = item.Rank
+        for item in IosSales_list:
+            dicIosSales[itemdate] = item.Rank
+
+        AosFree = [["Date", "Rank"]]
+        AosCharge = [["Date", "Rank"]]
+        AosSales = [["Date", "Rank"]]
+        IosFree = [["Date", "Rank"]]
+        IosCharge = [["Date", "Rank"]]
+        IosSales = [["Date", "Rank"]]
+
+        for key in dicAosFree.keys():
+            AosF = [key, int(dicAosFree[key])]
+            AosFree.append(AosF)
+        for key in dicAosCh.keys():
+            AosCh = [key, int(dicAosCh[key])]
+            AosCharge.append(AosCh)
+        for key in dicAosSales.keys():
+            AosS = [key, int(dicAosSales[key])]
+            AosSales.append(AosS)
+        for key in dicIosFree.keys():
+            IosF = [key, int(dicIosFree[key])]
+            IosFree.append(IosF)
+        for key in dicIosCh.keys():
+            IosCh = [key, int(dicIosCh[key])]
+            IosCharge.append(IosCh)
+        for key in dicIosSales.keys():
+            IosS = [key, int(dicIosSales[key])]
+            IosSales.append(IosS)
+        context['AosFree'] = AosFree
+        context['AosCharge'] = AosCharge
+        context['AosSales'] = AosSales
+        context['IosFree'] = IosFree
+        context['IosCharge'] = IosCharge
+        context['IosSales'] = IosSales
+
         return context

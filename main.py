@@ -43,10 +43,10 @@ def GevolutionCrawling():
 if __name__ =='__main__':
 
     #Amazon Crawl
-    start = AmazonCrawl(
-        "https://www.amazon.com/Best-Sellers-Home-Kitchen-Bedroom-Furniture/zgbs/home-garden/1063308/ref=zg_bs_unv_hg_3_3733271_1",
-        "Furniture")
-    now = start
-    AmazonCrawling(now, 1)
+    #start = AmazonCrawl(
+    #    "https://www.amazon.com/Best-Sellers-Home-Kitchen-Bedroom-Furniture/zgbs/home-garden/1063308/ref=zg_bs_unv_hg_3_3733271_1",
+    #    "Furniture")
+    #now = start
+    #AmazonCrawling(now, 1)
     GevolutionCrawling()
     #Gevolution Crawl
