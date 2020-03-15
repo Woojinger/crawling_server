@@ -63,7 +63,7 @@ class AmazonbrandList(ListView):
             if itemdate in dictionary50:
                 dictionary50[itemdate] = dictionary50[itemdate] + 1
             else :
-                dictionary50[itemdate] = 0
+                dictionary50[itemdate] = 1
                 dictionary20[itemdate] = 0
                 dictionary5[itemdate] = 0
             if int(item.Rank)<21:
@@ -115,7 +115,7 @@ class AmazonOtherBrand(ListView):
             if itemdate in dictionary50:
                 dictionary50[itemdate] = dictionary50[itemdate] + 1
             else:
-                dictionary50[itemdate] = 0
+                dictionary50[itemdate] = 1
                 dictionary20[itemdate] = 0
                 dictionary5[itemdate] = 0
             if int(item.Rank) < 21:
