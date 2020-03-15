@@ -31,11 +31,11 @@
     var arr50 = {{ arr50|safe }}
     var category = "{{ Category }}"
     google.charts.load("current", {packages:['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable(arr50);
+    google.charts.setOnLoadCallback(drawChart50);
+    function drawChart50() {
+        var data50 = google.visualization.arrayToDataTable(arr50);
 
-        var options = {
+        var options50 = {
           title: '50위 안쪽에 있는 상품 개수',
           curveType: 'function',
           legend: { position: 'bottom' },
@@ -47,20 +47,20 @@
       }
         };
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart50'));
+        var chart50 = new google.visualization.LineChart(document.getElementById('curve_chart50'));
 
-        chart.draw(data, options);
+        chart50.draw(data50, options50);
       }
     </script>
     <script type="text/javascript">
     var arr20 = {{ arr20|safe }}
     var category = "{{ Category }}"
     google.charts.load("current", {packages:['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable(arr20);
+    google.charts.setOnLoadCallback(drawChart20);
+    function drawChart20() {
+        var data20 = google.visualization.arrayToDataTable(arr20);
 
-        var options = {
+        var options20 = {
           title: '20위 안쪽에 있는 상품 개수',
           curveType: 'function',
           legend: { position: 'bottom' },
@@ -72,20 +72,20 @@
       }
         };
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart20'));
+        var chart20 = new google.visualization.LineChart(document.getElementById('curve_chart20'));
 
-        chart.draw(data, options);
+        chart20.draw(data20, options20);
       }
     </script>
     <script type="text/javascript">
     var arr5 = {{ arr5|safe }}
     var category = "{{ Category }}"
     google.charts.load("current", {packages:['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable(arr5);
+    google.charts.setOnLoadCallback(drawChart5);
+    function drawChart5() {
+        var data5 = google.visualization.arrayToDataTable(arr5);
 
-        var options = {
+        var options5 = {
           title: '5위 안쪽에 있는 상품 개수',
           curveType: 'function',
           legend: { position: 'bottom' },
@@ -97,9 +97,9 @@
       }
         };
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart5'));
+        var chart5 = new google.visualization.LineChart(document.getElementById('curve_chart5'));
 
-        chart.draw(data, options);
+        chart5.draw(data5, options5);
       }
     </script>
 </head>
@@ -192,6 +192,12 @@
             </fieldset>
         </form>
     </div>
+</div>
+<div>
+    {{ arr50  }}
+    {{ arr20 }}
+    {{ arr5 }}
+
 </div>
 {% if object_list.exists %}
 <div class="card border-primary mb-3" style="max-width: 20rem; margin:auto;">
