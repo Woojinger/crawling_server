@@ -64,16 +64,14 @@ class AmazonbrandList(ListView):
                 dictionary50[itemdate] = dictionary50[itemdate] + 1
             else :
                 dictionary50[itemdate] = 0
+                dictionary20[itemdate] = 0
+                dictionary5[itemdate] = 0
             if int(item.Rank)<21:
                 if itemdate in dictionary20 :
                     dictionary20[itemdate] = dictionary20[itemdate] + 1
-                else :
-                    dictionary20[itemdate] = 0
             if int(item.Rank)<6:
                 if itemdate in dictionary5 :
                     dictionary5[itemdate] = dictionary5[itemdate] + 1
-                else :
-                    dictionary5[itemdate] = 0
         brandarray50 = [["Date", brand]]
         brandarray20 = [["Date", brand]]
         brandarray5 = [["Date", brand]]
@@ -104,7 +102,11 @@ class AmazonOtherBrand(ListView):
         context['Category'] = "{}".format(q)
         brand = self.request.GET.get("brand")
         context['Brand'] = brand
-        object_list = Amazon.objects.filter(Selected_category=q, Brand=brand)
+        if ((brand == "Linenspa") or (brand == "LINENSPA")):
+            preobject_list = Amazon.objects.filter(Selected_category=q)
+            object_list = preobject_list.filter(Q(Brand="Linenspa") | Q(Brand="LINENSPA"))
+        else:
+            object_list = Amazon.objects.filter(Selected_category=q, Brand=brand)
         dictionary50 = {}
         dictionary20 = {}
         dictionary5 = {}
@@ -114,16 +116,14 @@ class AmazonOtherBrand(ListView):
                 dictionary50[itemdate] = dictionary50[itemdate] + 1
             else:
                 dictionary50[itemdate] = 0
+                dictionary20[itemdate] = 0
+                dictionary5[itemdate] = 0
             if int(item.Rank) < 21:
                 if itemdate in dictionary20:
                     dictionary20[itemdate] = dictionary20[itemdate] + 1
-                else:
-                    dictionary20[itemdate] = 0
             if int(item.Rank) < 6:
                 if itemdate in dictionary5:
                     dictionary5[itemdate] = dictionary5[itemdate] + 1
-                else:
-                    dictionary5[itemdate] = 0
         brandarray50 = [["Date", brand]]
         brandarray20 = [["Date", brand]]
         brandarray5 = [["Date", brand]]
