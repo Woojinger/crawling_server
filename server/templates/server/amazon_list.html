@@ -8,6 +8,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="{% static 'server/amazon/bootstrap.min.css' %}">
 </head>
+<style>
+.dropdown-content {
+  display: none;
+  background-color: #f9f9f9;
+  margin : auto;
+  max-width: 130px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+.show {display:block;}
+
+</style>
 <body>
 <div class="alert alert-dismissible alert-warning">
     <p class="mb-0">empty</p>
@@ -15,19 +36,30 @@
 <div class="alert alert-dismissible alert-warning">
     <p class="mb-0">Amazon 사이트로 직접 가고 싶다면 <a href="https://www.amazon.com/Best-Sellers-Home-Kitchen-Bedroom-Furniture/zgbs/home-garden/1063308/ref=zg_bs_unv_hg_3_3733101_1" class="alert-link">여기를 클릭하세요</a>.</p>
 </div>
+{% if object_list.exists %}
 <div class="card border-primary mb-3" style="max-width: 20rem; margin:auto;">
     <div class="card-header" style="text-align: center;">Selected Category</div>
     <div class="card-body">
         <h4 class="card-title" style="text-align: center;">{{ Date }}</h4>
         <h4 class="card-title" style="text-align: center;">{{ Category }}</h4>
-        {% if object_list.exists %}
         <p class="card-text" style="text-align: center;">Parent Category : {{ Parent_Category }}</p>
-        {% endif %}
     </div>
 </div>
+{% else %}
+
+<div class="card text-white bg-primary mb-3" style="max-width: 20rem; margin:auto;">
+    <div class="card-header" style="text-align: center;">No Data at {{ Date }} </div>
+    <div class="card-body">
+        <h4 class="card-title" style="text-align: center;">다른 날짜를 선택해 주세요</h4>
+        <p class="card-text" style="text-align: center;">Selected Category : {{ Category }}</p>
+        <p class="card-text" style="text-align: center;">Parent Category : {{ Parent_Category }}</p>
+    </div>
+</div>
+
+{% endif %}
 <div class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
     <div class="container">
-        <a href="#" class="navbar-brand">AmazonRank</a>
+        <a href="/amazon/Bedroom Furniture/select" class="navbar-brand">AmazonRank</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -38,7 +70,7 @@
                     <div class="dropdown-menu" aria-labelledby="themes">
                         <div style="text-align: center;">Furniture</div>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../Bedroom Furniture/">Bedroom Furniture</a>
+                        <a class="dropdown-item" href="../Bedroom Furniture/select/">Bedroom Furniture</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -46,10 +78,8 @@
                     <div class="dropdown-menu" aria-labelledby="themes">
                         <div style="text-align: center;">Bedroom Furniture</div>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../Beds, Frames & Bases/">Beds, Frames & Bases</a>
-                        <a class="dropdown-item" href="../Bedroom Armoires/">Bedroom Armoires</a>
-                        <a class="dropdown-item" href="../Dressers/">Dressers</a>
-                        <a class="dropdown-item" href="../Mattresses & Box Springs/">Mattresses & Box Springs</a>
+                        <a class="dropdown-item" href="../Beds, Frames & Bases/select/">Beds, Frames & Bases</a>
+                        <a class="dropdown-item" href="../Mattresses & Box Springs/select/">Mattresses & Box Springs</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -57,10 +87,10 @@
                     <div class="dropdown-menu" aria-labelledby="themes">
                         <div style="text-align: center;">Beds, Frames & Bases</div>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../Bases & Foundations/">Bases & Foundations</a>
-                        <a class="dropdown-item" href="../Bed Frames/">Bed Frames</a>
-                        <a class="dropdown-item" href="../Beds/">Beds</a>
-                        <a class="dropdown-item" href="../Headboards & Footboards/">Headboards & Footboards</a>
+                        <a class="dropdown-item" href="../Bases & Foundations/select/">Bases & Foundations</a>
+                        <a class="dropdown-item" href="../Bed Frames/select/">Bed Frames</a>
+                        <a class="dropdown-item" href="../Beds/select/">Beds</a>
+                        <a class="dropdown-item" href="../Headboards & Footboards/select/">Headboards & Footboards</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -68,11 +98,11 @@
                     <div class="dropdown-menu" aria-labelledby="themes">
                         <div style="text-align: center;">Mattresses & Box Springs</div>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../Box Springs/">Box Springs</a>
-                        <a class="dropdown-item" href="../Mattress & Box Spring Sets/">Mattress & Box Spring Sets</a>
-                        <a class="dropdown-item" href="../Mattresses/">Mattresses</a>
-                        <a class="dropdown-item" href="../Waterbed Mattresses/">Waterbed Mattresses</a>
-                        <a class="dropdown-item" href="../Mattress Toppers/">Mattress Toppers</a>
+                        <a class="dropdown-item" href="../Box Springs/select/">Box Springs</a>
+                        <a class="dropdown-item" href="../Mattress & Box Spring Sets/select/">Mattress & Box Spring Sets</a>
+                        <a class="dropdown-item" href="../Mattresses/select/">Mattresses</a>
+                        <a class="dropdown-item" href="../Waterbed Mattresses/select/">Waterbed Mattresses</a>
+                        <a class="dropdown-item" href="../Mattress Toppers/select/">Mattress Toppers</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -85,7 +115,26 @@
 
 <!-- Navbar
 ================================================== -->
-
+<h4 align="center"><small class="text-muted">날짜별 순위 보기는 <strong>2020년 3월 14일부터 현재 날짜</strong>까지만 볼 수 있습니다(현재 날짜는 시간에 따라 업데이트가 안되어 있을 수 있음)</small></h4>
+<div style="text-align: center;">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-primary active">
+            <input id = "datebtn" type="checkbox" checked="" autocomplete="off"> 날짜별 순위 보기
+        </label>
+    </div>
+</div>
+<div style="text-align: center;">
+    <div id="myDropdown" class="dropdown-content" style="text-align: center;">
+        <form action = "" method="get">
+            <fieldset class="form-group">
+                <legend><h5><small class="text-muted">날짜를 고르세요</small></h5></legend>
+                <span class="validity"></span>
+                <input type="date" name="date" id="dateselect" min="2020-03-14" required pattern="\d{4}-\d{2}-\d{2}" style="margin: auto;">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
 <ul>
     {% if object_list.exists %}
     <table class="table table-hover">
@@ -99,19 +148,27 @@
         </thead>
         <tbody>
         {% for item in object_list %}
-            <tr>
-                <th scope="row">{{ item.Rank }}</th>
-                <td>{{ item.Name }}</td>
-                <td>{{ item.Brand }}</td>
-                <td>{{ item.Date }}</td>
-            </tr>
+        <tr>
+            <th scope="row">{{ item.Rank }}</th>
+            <td>{{ item.Name }}</td>
+            <td>{{ item.Brand }}</td>
+            <td>{{ item.Date }}</td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
     {% else %}
-    <h3>No data</h3>
+
     {% endif %}
 </ul>
+<script>
+    document.getElementById("datebtn").onclick = function() {myFunction()};
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+    document.getElementById('dateselect').value = new Date().toISOString().substring(0, 10);
+    document.getElementById('dateselect').max = new Date().toISOString().substring(0, 10);
+</script>
 <script src="{% static 'server/amazon/js/jquery.min.js' %}"></script>
 <script src="{% static 'server/amazon/js/popper.min.js' %}"></script>
 <script src="{% static 'server/amazon/js/bootstrap.min.js' %}"></script>
