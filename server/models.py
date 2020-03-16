@@ -7,7 +7,6 @@ class Amazon(models.Model):
     Brand = models.CharField(max_length=100, default="NA")
     Rank = models.CharField(max_length=10)
     Selected_category = models.CharField(max_length=200)
-    Parent_category = models.CharField(max_length=200)
     Date = models.CharField(max_length=100)
 
     def __str__(self):

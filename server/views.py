@@ -263,15 +263,19 @@ class GevolutionGraph(ListView):
             itemdate = item.Date
             dicAosFree[itemdate] = item.Rank
         for item in AosCharge_list:
+            itemdate = item.Date
             dicAosCh[itemdate] = item.Rank
         for item in AosSales_list:
+            itemdate = item.Date
             dicAosSales[itemdate] = item.Rank
         for item in IosFree_list:
             itemdate = item.Date
             dicIosFree[itemdate] = item.Rank
         for item in IosCharge_list:
+            itemdate = item.Date
             dicIosCh[itemdate] = item.Rank
         for item in IosSales_list:
+            itemdate = item.Date
             dicIosSales[itemdate] = item.Rank
 
         AosFree = [["Date", "Rank"]]
