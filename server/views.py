@@ -117,7 +117,7 @@ class AmazonbrandList(ListView):
         context['arr50'] = brandarray50
         context['arr20'] = brandarray20
         context['arr5'] = brandarray5
-        if(len(brandarray100)==0) :
+        if(len(brandarray100)==1) :
             context["hundred"] = False
         else :
             context["hundred"] = True
