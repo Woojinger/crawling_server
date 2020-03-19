@@ -28,6 +28,31 @@
 </style>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+    var arr100 = {{ arr100|safe }}
+    var category = "{{ Category }}"
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart100);
+    function drawChart100() {
+        var data100 = google.visualization.arrayToDataTable(arr100);
+
+        var options100 = {
+          title: '100위 안쪽에 있는 상품 개수',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          vAxis: {
+        viewWindow: {
+          min: 0,
+          max: 100
+        }
+      }
+        };
+
+        var chart50 = new google.visualization.LineChart(document.getElementById('curve_chart100'));
+
+        chart50.draw(data100, options100);
+      }
+    </script>
+    <script type="text/javascript">
     var arr50 = {{ arr50|safe }}
     var category = "{{ Category }}"
     google.charts.load("current", {packages:['corechart']});
@@ -205,6 +230,9 @@
 <div id="curve_chart5" style="width: 1000px; height: 400px"></div>
 <div id="curve_chart20" style="width: 1000px; height: 400px"></div>
 <div id="curve_chart50" style="width: 1000px; height: 400px"></div>
+{% if hundred %}
+<div id="curve_chart100" style="width: 1000px; height: 400px"></div>
+{% endif %}
 
 {% else %}
 <div class="card text-white bg-primary mb-3" style="max-width: 20rem; margin:auto;">

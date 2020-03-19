@@ -11,6 +11,7 @@ class HomeTemplateView(TemplateView) :
 router = routers.DefaultRouter()
 router.register('amazon', views.AmazonView, 'amazon')
 router.register('gevolution', views.GevolutionView, 'gevolution')
+router.register('fiftytohundred', views.FiftytohundredView, 'fiftytohundred')
 
 urlpatterns = [
     path('', include('server.urls')),

@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import Gevolution, Amazon
-from .serializers import AmazonSerializer, GevolutionSerializer
+from .models import Gevolution, Amazon, Fiftytohundred
+from .serializers import AmazonSerializer, GevolutionSerializer, FiftytohundredSerializer
 from django.views.generic import ListView
 from rest_framework import viewsets
 from django.db.models import Q
@@ -53,13 +53,38 @@ class AmazonbrandList(ListView):
         if (brand == "Linenspa"):
             preobject_list = Amazon.objects.filter(Selected_category=q)
             object_list = preobject_list.filter(Q(Brand="Linenspa") | Q(Brand="LINENSPA"))
+        elif (brand == "LUCID"):
+            preobject_list = Amazon.objects.filter(Selected_category=q)
+            object_list = preobject_list.filter(Q(Brand="Lucid") | Q(Brand="LUCID"))
         else:
             object_list = Amazon.objects.filter(Selected_category=q, Brand=brand)
+        dictionary100 = {}
+        hundredrank = Fiftytohundred.objects.filter(Selected_category=q)
+        if (brand == "Zinus") :
+            for item in hundredrank :
+                dictionary100[item.Date] = item.Zinus
+        if (brand == "Sleep") :
+            for item in hundredrank :
+                dictionary100[item.Date] = item.Sleep
+        if (brand == "LUCID") :
+            for item in hundredrank :
+                dictionary100[item.Date] = item.bigLUCID +item.Lucid
+        if (brand == "Linenspa") :
+            for item in hundredrank :
+                dictionary100[item.Date] = item.bigLINENSPA + item.Linenspa
+        if (brand == "AmazonBasics") :
+            for item in hundredrank :
+                dictionary100[item.Date] = item.AmazonBasics
+        if (brand == "Casper") :
+            for item in hundredrank :
+                dictionary100[item.Date] = item.Casper
         dictionary50 = {}
         dictionary20 = {}
         dictionary5 = {}
         for item in object_list:
             itemdate = item.Date
+            if itemdate in dictionary100 :
+                dictionary100[itemdate] = dictionary100[itemdate] + 1
             if itemdate in dictionary50:
                 dictionary50[itemdate] = dictionary50[itemdate] + 1
             else :
@@ -72,19 +97,30 @@ class AmazonbrandList(ListView):
             if int(item.Rank)<6:
                 if itemdate in dictionary5 :
                     dictionary5[itemdate] = dictionary5[itemdate] + 1
+
+
+        brandarray100 = [["Date", brand]]
         brandarray50 = [["Date", brand]]
         brandarray20 = [["Date", brand]]
         brandarray5 = [["Date", brand]]
         for key in dictionary50.keys():
+            if key in dictionary100.keys() :
+                column100 = [key, dictionary100[key]]
+                brandarray100.append(column100)
             column50 = [key, dictionary50[key]]
             column20 = [key, dictionary20[key]]
             column5 = [key, dictionary5[key]]
             brandarray50.append(column50)
             brandarray20.append(column20)
             brandarray5.append(column5)
+        context['arr100'] = brandarray100
         context['arr50'] = brandarray50
         context['arr20'] = brandarray20
         context['arr5'] = brandarray5
+        if(len(brandarray100)==0) :
+            context["hundred"] = False
+        else :
+            context["hundred"] = True
         return context
 
 
@@ -105,6 +141,9 @@ class AmazonOtherBrand(ListView):
         if ((brand == "Linenspa") or (brand == "LINENSPA")):
             preobject_list = Amazon.objects.filter(Selected_category=q)
             object_list = preobject_list.filter(Q(Brand="Linenspa") | Q(Brand="LINENSPA"))
+        elif ((brand == "Lucid") or (brand == "LUCID")):
+            preobject_list = Amazon.objects.filter(Selected_category=q)
+            object_list = preobject_list.filter(Q(Brand="Lucid") | Q(Brand="LUCID"))
         else:
             object_list = Amazon.objects.filter(Selected_category=q, Brand=brand)
         dictionary50 = {}
@@ -137,6 +176,7 @@ class AmazonOtherBrand(ListView):
         context['arr50'] = brandarray50
         context['arr20'] = brandarray20
         context['arr5'] = brandarray5
+        context["hundred"] = False
 
         return context
 
@@ -152,6 +192,11 @@ class GevolutionView(viewsets.ModelViewSet):
         queryset = Gevolution.objects.all()
         return queryset
 
+class FiftytohundredView(viewsets.ModelViewSet):
+    serializer_class = FiftytohundredSerializer
+    def get_queryset(self):
+        queryset = Fiftytohundred.objects.all()
+        return queryset
 
 class AmazonList(ListView):
     model = Amazon
